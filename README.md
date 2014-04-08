@@ -1,4 +1,0 @@
-easychairscripts
-================
-
-Scripts for EasyChair

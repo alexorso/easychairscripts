@@ -1,0 +1,61 @@
+LIST OF REVIEWS FOR PPM 2012
+
+REVIEWS
+
+
+*********************** PAPER 1 ***********************
+AUTHORS: Alfred Neumann and Hussein Zhang
+TITLE: An Empirical Investigation of Physical PC Meetings
+PRELIMINARY DECISION: reject
+================== SUMMARY OF REVIEWS =================
+Annie Aaron: 3 (3)
+Bert Becker: -3 (4)
+
+++++++++++ REVIEW 1 (Annie Aaron) +++++++++
+RATING: 3 (A: Stellar paper.  Turing Award or better.)
+CONFIDENCE: 3 (high)
+STRENGTH OF EVIDENCE: 4 (strong)
+NOVELTY: 2 (incremental)
+---- REVIEW ---
+SUMMARY:
+Do Physical PC Meetings Make Sense?
+
+EVALUATION:
+
+The paper describes briefly the architecture and components of a tool which allows to assess physical PC meetings.
+
+POINTS IN FAVOR OR AGAINST:
+
+in favor:
+- the paper describes almost no related work; there is a body of papers and workshops/conferences which deal with this topic
+ 
+against:
+- the topic is important and the proposed approach works for a class of venues
+
+
+
+QUESTIONS FOR THE AUTHORS:
+
+++++++++++ REVIEW 2 (Bert Becker) +++++++++
+RATING: -3 (D: Serious problems. I will argue to reject this paper.)
+CONFIDENCE: 4 (expert)
+STRENGTH OF EVIDENCE: 1 (none)
+NOVELTY: 1 (done before)
+---- REVIEW ---
+--- Please provide a short summary of the submission.
+SUMMARY: The paper introduces a model for PC meetings.
+
+--- Your detailed evaluation.
+EVALUATION: The paper is a non-acceptable paper. It is way too short. It does not present related work. And most seriously, it also does not contribute technical details or interesting content.
+
+--- The most important aspects in your evaluation.
+POINTS IN FAVOR OR AGAINST:
+- Paper does not contribute to the state of art
+- Paper does not give enough details
+- Paper misses related work
+- Paper contains wrong statements about QVT
+
+--- Please list the most important questions for the authors to be addressed 
+--- in their rebuttal.
+QUESTIONS FOR THE AUTHORS:
+- What is new in the presented approach? I do not see a novel contribution.
