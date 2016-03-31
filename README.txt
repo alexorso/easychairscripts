@@ -1,40 +1,72 @@
-Welcome to the EasyChair slide generator.  This is a simple script to support physical PC meetings for EasyChair-supported conferences and workshops.  It has been used successfully for at least ISSTA 2008, ISSTA 2010, ISSTA 2011, ESEC/FSE 2011, ISSTA 2013, and ISSTA 2014.
+Welcome to the EasyChair slide generator. This is a simple script to
+support physical PC meetings for EasyChair-supported conferences and
+workshops. It has been used successfully for at least ISSTA 2008,
+ISSTA 2010, ISSTA 2011, ESEC/FSE 2011, ISSTA 2013, ISSTA 2014, and
+FSE 2014.
 
 Here's how to use it:
 
-0. This script assumes a Unix machine (Linux, MacOS X, ...) with LaTeX installed.
+0. This script assumes a Unix machine (Linux, MacOS X, ...) with
+   LaTeX installed.
 
-1. Use EasyChair 'Administration -> Other Utilities -> List of Reviews' to download the textual list of reviews; store it as "reviews.txt"
-1.1. Anonymize reviewers and subreviewers for papers that have conflict with some chair; you can replace names with "Reviewer 1", "Reviewer 2", etc.
-1.2. In 2014, we used a spreadsheet to prepare the discussion list, and then exported it into a text file "order.txt" where easy line had this format:
-Paper number<TAB>Discussion lead<TAB>Conflicts separated by comma<TAB>PC paper or not<TAB>Paper authors and title
-1.3. Using "order.txt" we could skip steps 2 and 3.
+1. Use EasyChair 'Administration -> Other Utilities -> List of
+   Reviews' to download the textual list of reviews; store it as
+   "Inputs/reviews.txt".
 
-2. Set up discussion leaders.  Either:
-2a. Edit "reviews.txt" and add a line "DISCUSSION LEADER: <discussion leader name>" the line after "PRELIMINARY DECISION"
-2b. Or: Set up a file "leaders.txt" in the format "Paper number<TAB>Reviewer".
+2. Anonymize reviewers and subreviewers for papers that have conflict
+   with some chair; you can replace names with "Reviewer 1",
+   "Reviewer 2", etc.
 
-3. Place in "papers.txt" the list of papers to be discussed (paper numbers separated by whitespace).  (You may wish to generate "papers.txt" out of some annotated working file, as you may have to change the order from time to time. The enclosed 'Makefile' uses 'papers-full.txt' as a source for that.)
+3. Use a spreadsheet to prepare the discussion list, and then export
+   it into a text file "Inputs/order.txt" where easy line had this
+   format:
 
-4. Place in "reviewers.txt" the list of reviewers (names separated by spaces and "_" between first and last name--e.g., Alex_Orso)
+   Paper number<TAB>Discussion lead<TAB>Paper title and authors
 
-5. Suitably edit header.tex, footer.tex, and slide.tex.
+   (The last field is unused and there for the PC chairs' convenience
+   only. It can be safely omitted.)
 
-6. Run 'python generate_slides.py'.
-6.1. This may create LaTeX problems with some Unicode characters in author names or paper titles (e.g. 'é'); the workaround was to manually replace some characters with ASCII (e.g. 'e').
+4. Place in "Inputs/reviewers.txt" the list of reviewers, using names
+   separated by spaces and "_" between first and last name (e.g.,
+   John_Doe).
 
-7. The resulting slides will be in "presentation.pdf", and the discussion lists for the PC members in directory "DiscussionLists"
-7.1. In 2014, we also ran "make questions" after this to create the discussion lists where "?" identifies papers with chair conflicts
+5. In directory "Templates", suitably edit "header.tex". Edit
+   "footer.tex" and "slide.tex" if you want to personalize them as
+   well, although that is optional.
 
-8. The script will also output a possible seating order on standard output, avoiding having reviewers of a paper sit besides a colleague with a conflict on that same paper.
+6. Run "make clean" (to be safe), then run "make".
 
-Note: You can run the tool in this directory to see how the script works.  It should produce the files as described above.  If not, adjust your environment and/or the script.
+7. If everything works as expected, all you need should be in
+   directory "Outputs":
 
-Enjoy! - Andreas, Kim, and Alex
+   - Meeting slides: file "presentation.pdf"
+   - Discussion lists for the PC members: directory "DiscussionLists"
+   - Seating assignments: file "seating.txt" (if the search based
+     algorithm is successful in avoiding having reviewers of a paper
+     sit besides a colleague with a conflict on that same paper. At
+     the top of the file, there is information on the number of
+     conflicts that could not be solved).
 
-Written by 
-* Andreas Zeller <zeller@cs.uni-saarland.de> (contact),
-* Kim Herzig <kim@cs.uni-saarland.de>, and
-* Alex Orso <orso@cc.gatech.edu>
+* Notes:
 
-This work is licensed under a Creative Commons Attribution 3.0 Unported License - http://creativecommons.org/licenses/by/3.0/
+  There are some sample input file that you can use to test the tool
+  in your environment. Simply run "make" in the directory where this
+  README is and check that the expected outputs are generated in the
+  "Outputs" directory. If not, you will have adjust your environment
+  and/or the script (hopefully the former).
+
+  In case of LaTeX problems with some Unicode characters in author
+  names or paper titles (e.g., 'é') at Step 6, the workaround is to
+  manually replace some characters with ASCII (e.g.., 'e').
+
+  See the Makefile for other possible useful features (e.g.,"make
+  questions" after this to create the discussion lists where "?"
+  identifies papers with chair conflicts
+
+* Acknowledgements:
+
+  See the comments at the beginning of the "generate_slides" script
+  for details on the creator of and contributors for this tool.
+
+This work is licensed under a Creative Commons Attribution 3.0
+Unported License - http://creativecommons.org/licenses/by/3.0/

@@ -51,7 +51,7 @@ class Paper:
 				conflict_line = conflict_line.replace(", ",",")
 				self._conflicts = conflict_line.split(",")
 #				print(self._conflicts)
-			if l.find("DISCUSSION") > -1:
+			if l.find("DISCUSSIO") > -1:
 				self._leader = l[19:len(l)]
 #				print(self._leader)
 		
@@ -123,9 +123,9 @@ class Paper:
 
 class Presentation:
 	def __init__(self):
-		self._header = open("header.tex","r").read()
-		self._footer = open("footer.tex","r").read()
-		self._slide_xml = open("slide.tex","r").read()
+		self._header = open("Templates/header.tex","r").read()
+		self._footer = open("Templates/footer.tex","r").read()
+		self._slide_xml = open("Templates/slide.tex","r").read()
 		self._new_slides = ""
 		self._num_slides = 0
 	
@@ -223,8 +223,7 @@ class Presentation:
 		new_presentation_file.write(self._new_slides)
 		new_presentation_file.write(self._footer)
 		new_presentation_file.close()
-		os.system("pdflatex presentation.tex")
-
+		os.system("pdflatex presentation.tex; mv presentation.pdf Outputs")
 
 
 def getOrder():
@@ -234,7 +233,7 @@ def getOrder():
 	return papers_content.split()
 
 def getReviewers():
-	reviewers_file = open("reviewers.txt")
+	reviewers_file = open("Inputs/reviewers.txt")
 	reviewers_content = reviewers_file.read()
 	reviewers_file.close()
 	return reviewers_content.split()
@@ -257,7 +256,7 @@ def getLeaders():
 	return leaders
 	
 def getPapers():
-	review_file = open("reviews.txt","r")
+	review_file = open("Inputs/reviews.txt","r")
 	review_content = review_file.read()
 	start_index = review_content.find("<pre>") + 5
 	end_index = review_content.rfind("</div>")
@@ -409,18 +408,18 @@ def generateSlides():
 		presentation.addNewSlide(papers[str(p.strip())])
 		
         presentation.writePresentation()
-        print "*** Slides generated in 'presentation.pdf'"
+        print "*** Slides generated in 'Outputs/presentation.pdf'"
 
 	reviewers = getReviewers()
 
-	command = "%s %s" % ("rm -rf ", "DiscussionLists")
+	command = "%s %s" % ("rm -rf ", "Outputs/DiscussionLists")
 	os.system(command)
-	command = "%s %s" % ("mkdir", "DiscussionLists")
+	command = "%s %s" % ("mkdir", "Outputs/DiscussionLists")
 	os.system(command)
 
 	for r in reviewers:
 		header = "%s%s%s" % ("*** List for ", r.replace("_", " "), " ***\n")
-		filename = "%s%s%s" % ("DiscussionLists/", r, ".txt")
+		filename = "%s%s%s" % ("Outputs/DiscussionLists/", r, ".txt")
 
 		# print "*** Generating list for", r.replace("_", " "), "in", filename, "***"
 
@@ -436,7 +435,7 @@ def generateSlides():
 
 		new_rev_file.close()
 
-	print "*** Individual discussion lists written to 'DiscussionLists/' subdirectory"
+	print "*** Individual discussion lists written to 'Outputs/DiscussionLists/' subdirectory"
 		
 def splitPapers():
 	papers = getPapers()
@@ -536,16 +535,26 @@ def searchSeating():
             no_improvement = no_improvement + 1
 
 
-
-
         if CR_fitness(new_seating_plan, seating_conflicts) == 0:
-            print "Found solution at Gen  " + str(curr_gen) + "| No. of conflicts: " + str(CR_fitness(seating_plan, seating_conflicts))
-            print seating_plan
+
+            seating_file = open("Outputs/seating.txt","w")
+            seating_file.write("Found solution at Gen  " + str(curr_gen) + "| No. of conflicts: " + str(CR_fitness(seating_plan, seating_conflicts)) + "\n")
+            for item in seating_plan:
+                seating_file.write("%s\n" % item)
+            seating_file.close()
+            print("Generated optimal seating assignment in Output/seating.txt")
             break
+
         if no_improvement > max_no_improvement:
-            print "Failed! current solution at Gen  " + str(curr_gen) + "| No. of conflicts: " + str(CR_fitness(seating_plan, seating_conflicts))
-            print seating_plan
+            
+            seating_file = open("Outputs/seating.txt","w")
+            seating_file.write("Failed! current solution at Gen  " + str(curr_gen) + "| No. of conflicts: " + str(CR_fitness(seating_plan, seating_conflicts)) + "\n")
+            for item in seating_plan:
+                seating_file.write("%s\n" % item)
+            seating_file.close()
+            print("Generated suboptimal seating assignment in Output/seating.txt (" + str(CR_fitness(seating_plan, seating_conflicts)) + ")")
             break
+        
         if (curr_gen % SearchSACoolingSchedule == 0):
             t = t*SearchSACooling;
         

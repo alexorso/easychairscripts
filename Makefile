@@ -1,20 +1,20 @@
 
 presentations.pdf:	papers.txt
-	python ./generate_slides.py # -search
-	# Adding "-search" uses a searchSeat() method which uses a simple simulated annealing algorithm to optimise conflicts in seat plan generation.
+	python ./generate_slides.py -search
+# Adding "-search" uses a searchSeat() method which uses a simple simulated annealing algorithm to optimise conflicts in seat plan generation.
 
 clean:
 	rm -fr presentation.*
 	rm -fr reviews
-	rm -fr DiscussionLists
+	rm -fr Outputs/*
 	rm -f papers.txt papers-full.txt leaders.txt
 
 papers.txt:	papers-full.txt
 	grep '^[1-9]' papers-full.txt | awk '{ print $$1 }' > papers.txt
 
-papers-full.txt:	order.txt
-	<order.txt cut -f1,5 >papers-full.txt
-	<order.txt cut -f-2 >leaders.txt
+papers-full.txt:	Inputs/order.txt
+	<Inputs/order.txt cut -f1,5 >papers-full.txt
+	<Inputs/order.txt cut -f-2 >leaders.txt
 
 stats:	presentations.pdf
 	grep -c ^D DiscussionLists/*.txt
